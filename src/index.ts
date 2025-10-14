@@ -1,15 +1,10 @@
-import express, { response } from "express";
-import { request } from "http";
+import express from "express";
+import authRouter from "./routes/auth";
 
-const app = express();
+const app = express()
 
-const port = process.env.PORT || 8989
-app.get('/', (request, response) =>{
-    response.send('<h1>Hello this is my very first server</h1>')
-})
+const port = 3000;
 
-app.get('/apple', (request, response) =>{
-    response.send('<h1>Apple is red</h1>')
-})
+app.use('/auth', authRouter);
 
-app.listen(port, () =>{console.log(`App is running on port http://localhost:${port}`)})
+app.listen(port, () => { console.log(`The server is running on the port http://localhost:${port}`) })
