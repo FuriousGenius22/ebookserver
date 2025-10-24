@@ -12,12 +12,14 @@ export const generateAuthLink: RequestHandler = async (req, res) => {
     2. Store that token securely inside the database
        so that we can validate it in future.
     3. Create a link which include that secure token and user information
-    4. Send that link to users email address.
+    4. Send that link to user's email address.
     5. Notify user to look inside the email to get the login link
   */
 
   const { email } = req.body;
+
   let user = await UserModel.findOne({ email });
+
   if (!user) {
     // if no user found then create new user.
     user = await UserModel.create({ email });
@@ -25,10 +27,12 @@ export const generateAuthLink: RequestHandler = async (req, res) => {
 
   const randomToken = crypto.randomBytes(36).toString("hex");
 
-  await VerificationTokenModel.create<{ userId: string }>({
+  let verificationToken = await VerificationTokenModel.create<{ userId: string }>({
+
     userId: user._id.toString(),
     token: randomToken,
   });
+  console.log(JSON.stringify(verificationToken, null, 2))
 
   res.json({ ok: true });
 };
