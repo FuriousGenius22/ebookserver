@@ -24,6 +24,12 @@ export const generateAuthLink: RequestHandler = async (req, res) => {
     // if no user found then create new user.
     user = await UserModel.create({ email });
   }
+  const userId = user._id.toString();
+
+  // if we already have token for this user it will remove that first
+  await VerificationTokenModel.findOneAndDelete({ userId });
+
+
 
   const randomToken = crypto.randomBytes(36).toString("hex");
 
@@ -33,6 +39,6 @@ export const generateAuthLink: RequestHandler = async (req, res) => {
     token: randomToken,
   });
   console.log(JSON.stringify(verificationToken, null, 2))
-
+  console.log(JSON.stringify(user, null, 2))
   res.json({ ok: true });
 };

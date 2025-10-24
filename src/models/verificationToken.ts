@@ -16,6 +16,18 @@ const verificationTokenSchema = new Schema({
     },
 });
 
+verificationTokenSchema.pre('save', function (next) {
+    if (this.isModified('token')) {
+        const salt = genSaltSync(12);
+        this.token = hashSync(this.token, salt);
+    }
+    next();
+})
+
+verificationTokenSchema.methods.compare = function (token: string) {
+    return compareSync(token, this.token)
+}
+
 const VerificationTokenModel = model(
     "VerificationTokenModel",
     verificationTokenSchema
