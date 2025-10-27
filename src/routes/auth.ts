@@ -1,10 +1,8 @@
 import { generateAuthLink } from "@/controllers/auth";
-import { emailValidationSchema, validate } from "@/middlewares/validate";
-import { RequestHandler, Router } from "express";
-import { z, ZodRawShape } from "zod";
+import { emailValidationSchema, validate } from "@/middlewares/validator";
+import { Router } from "express";
 
 const authRouter = Router();
-
 
 authRouter.post(
   "/generate-link",
