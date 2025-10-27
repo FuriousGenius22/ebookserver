@@ -6,12 +6,6 @@ import { errorHandler } from "./middlewares/error";
 
 const app = express();
 
-// app.use((req, res, next) => {
-//   req.on("data", (chunk) => {
-//     req.body = JSON.parse(chunk);
-//     next();
-//   });
-// });
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
