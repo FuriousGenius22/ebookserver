@@ -16,10 +16,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use("/auth", authRouter);
-app.post("/test", (req, res) => {
-  console.log(req.body);
-  res.json({});
-});
+
 
 app.use(errorHandler);
 
